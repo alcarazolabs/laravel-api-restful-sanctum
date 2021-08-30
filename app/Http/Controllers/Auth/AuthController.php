@@ -22,7 +22,7 @@ class AuthController extends Controller{
         ]);
         if ($validator->fails()) { 
          $result = [
-            'message' => 'Registrado correctamente',
+            'message' => 'No se pudo registrar',
             'success' => true,
             'status' => 200,
             'error' =>$validator->errors()->first(), //obtener solo el primer error   

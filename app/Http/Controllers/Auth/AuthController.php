@@ -11,7 +11,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller{
-    
+    dasdakdnaksdnkasda
+    asdknaskdmnaklsda
+    klandknasldnsak
         public function register(Request $request) {
            //usar facade Validator para poder obtener los errores
            // https://stackoverflow.com/questions/52058152/laravel-custom-error-validation-json-response-object-to-array

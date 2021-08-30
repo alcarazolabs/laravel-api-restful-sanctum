@@ -11,9 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller{
-    dasdakdnaksdnkasda
-    asdknaskdmnaklsda
-    klandknasldnsak
+  
         public function register(Request $request) {
            //usar facade Validator para poder obtener los errores
            // https://stackoverflow.com/questions/52058152/laravel-custom-error-validation-json-response-object-to-array
@@ -23,12 +21,14 @@ class AuthController extends Controller{
             'password' => 'required|max:255|string|min:6',
         ]);
         if ($validator->fails()) { 
-
+         $result = [
+            'message' => 'Registrado correctamente',
+            'success' => true,
+            'status' => 200,
+            'error' =>$validator->errors()->first(), //obtener solo el primer error   
+           ];
             return response()->json([
-               'message' => 'Fallo el registro',
-               'success' => true,
-               'status' => 401,
-               'error' => $validator->errors()->first(), //obtener solo el primer error
+               'result' => $result
              ], 401);
            
          }else{
@@ -44,11 +44,15 @@ class AuthController extends Controller{
            //$token = $user->createToken('auth_token')->plainTextToken;
            
            //retornar respuesta json al usuario con token de acceso
+           $result = [
+            'message' => 'Registrado correctamente',
+            'success' => true,
+            'status' => 200,
+            'error' => null         
+           ];
+         
            return response()->json([
-                'message' => 'Registrado correctamente',
-                'success' => true,
-                'status' => 200,
-                'error' => null,
+               'result' => $result
            ], 200);
     
         }   

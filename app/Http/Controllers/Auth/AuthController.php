@@ -32,7 +32,7 @@ class AuthController extends Controller{
              ], 401);
            
          }else{
-
+            //Registrar el usuario
            $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -52,7 +52,7 @@ class AuthController extends Controller{
            ];
          
            return response()->json([
-               'result' => $result
+               'result' => [$result],
            ], 200);
     
         }   

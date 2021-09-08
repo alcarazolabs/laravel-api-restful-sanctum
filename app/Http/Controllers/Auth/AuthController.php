@@ -91,13 +91,12 @@ class AuthController extends Controller{
         }
 
         public function userInfo(Request $request){
-        
+         $result = [
+            'user' =>  $request->user(),
+         ];
          // return $request->user();
          return response()->json([
-            'user' =>  $request->user(),
-            'success' => true,
-            'status' => 200
-            
+            'result' => [$result],
         ], 200);
         }
 

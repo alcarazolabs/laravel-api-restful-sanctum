@@ -154,4 +154,10 @@ class AuthController extends Controller{
       
       }
 
+      public function index(){
+         $reports = Report::orderBy('id','desc')->get();
+
+         return view("report.index", compact('reports'));
+      }
+
 }

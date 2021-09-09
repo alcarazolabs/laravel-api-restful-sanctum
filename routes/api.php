@@ -29,6 +29,8 @@ Route::post('/reports/new', [AuthController::class, 'storeReport'])->middleware(
 
 Route::get('/reports', [AuthController::class, 'getReports'])->middleware('auth:sanctum');
 
+Route::get('/reports/web', [AuthController::class, 'index']);
+
 /*
 
 Headers for test /userinfo endpoint:

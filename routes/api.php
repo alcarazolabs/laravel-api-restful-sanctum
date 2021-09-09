@@ -25,6 +25,10 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::get('/userinfo', [AuthController::class, 'userInfo'])->middleware('auth:sanctum');
 
+Route::post('/reports/new', [AuthController::class, 'storeReport'])->middleware('auth:sanctum');
+
+Route::get('/reports', [AuthController::class, 'getReports'])->middleware('auth:sanctum');
+
 /*
 
 Headers for test /userinfo endpoint:

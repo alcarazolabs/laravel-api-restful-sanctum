@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Illuminate\Support\Facades\Validator;
 use Exception;
 use App\Models\User;
+use App\Models\Report;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller{
   
@@ -99,5 +100,58 @@ class AuthController extends Controller{
             'result' => [$result],
         ], 200);
         }
+
+        public function storeReport(Request $request){
+         $validator = Validator::make($request->all(), [ 
+            'description' => 'required|max:255',
+            'photo' => 'required|mimes:jpeg,png,jpg,gif,svg|max:10000|nullable',
+            //10000 = 10mb maximo, el valor esta en kilobytes
+        ]);
+        if ($validator->fails()) { 
+         $result = [
+            'message' => 'No se puede registrar el reporte',
+            'success' => false,
+            'status' => 200,
+            'error' => $validator->errors()->first(), //obtener solo el primer error   
+           ];
+            return response()->json([
+               'result' => [$result]
+             ], 200); //401 -> crashea el app para eso se implementa safeApiCall en el App Android. Lo dejamos en 200 para mostrar los mensajes de validacion.
+           
+         }else{
+            $data = $request->all();
+            //Si no hay errores, registrar el reporte
+            if($request->hasFile('photo')){
+               $file = $request->file('photo');
+               $name = 'reports/'. uniqid() . '.' . $file->extension();
+               $file->storePubliclyAs('public', $name);
+               $data['photo'] = $name;
+           }
+           $product = Report::create($data);
+
+           //retornar respuesta json
+           $result = [
+            'message' => 'Reporte registrado correctamente',
+            'success' => true,
+            'status' => 200,
+            'error' => null         
+           ];
+         
+           return response()->json([
+               'result' => [$result],
+           ], 200);
+    
+        }   
+      }
+
+      public function getReports(){
+         $reports = Report::orderBy('id','desc')->get();
+       
+         //retornar response json
+         return response()->json([
+            'result' => $reports,
+        ], 200);
+      
+      }
 
 }

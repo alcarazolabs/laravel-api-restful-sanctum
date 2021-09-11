@@ -119,15 +119,21 @@ class AuthController extends Controller{
              ], 200); //401 -> crashea el app para eso se implementa safeApiCall en el App Android. Lo dejamos en 200 para mostrar los mensajes de validacion.
            
          }else{
-            $data = $request->all();
+            //$data = $request->all();
             //Si no hay errores, registrar el reporte
+            $fileName = "";
             if($request->hasFile('photo')){
                $file = $request->file('photo');
                $name = 'reports/'. uniqid() . '.' . $file->extension();
                $file->storePubliclyAs('public', $name);
-               $data['photo'] = $name;
+               //$data['photo'] = $name;
+               $fileName = $name;
            }
-           $product = Report::create($data);
+           $report = new Report;
+           $report->description=$request->description;
+           $report->photo = $fileName;
+           $report->user_id = Auth::user()->id;
+           $report->save();
 
            //retornar respuesta json
            $result = [
@@ -145,7 +151,9 @@ class AuthController extends Controller{
       }
 
       public function getReports(){
-         $reports = Report::orderBy('id','desc')->get();
+         $userIdAuth = Auth::user()->id;
+
+         $reports = Report::orderBy('id','desc')->where('user_id', $userIdAuth)->get();
        
          //retornar response json
          return response()->json([
@@ -155,6 +163,7 @@ class AuthController extends Controller{
       }
 
       public function index(){
+         
          $reports = Report::orderBy('id','desc')->get();
 
          return view("report.index", compact('reports'));

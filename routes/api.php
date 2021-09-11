@@ -34,7 +34,7 @@ Route::get('/reports/web', [AuthController::class, 'index']);
 /*
 
 Headers for test /userinfo endpoint:
-Content-Type: application/x-www-form-urlencoded
-Accept: application/json
-Authorization: Bearer 8|VZh7C66efxx41DAoDCXuBZ0UkFfWSwZeIb0dE3Ou
+Posman: Content-Type: application/x-www-form-urlencoded
+Header -> Accept: application/json
+Header -> Authorization: Bearer 8|VZh7C66efxx41DAoDCXuBZ0UkFfWSwZeIb0dE3Ou
 */
